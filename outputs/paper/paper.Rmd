@@ -1,0 +1,550 @@
+---
+title: "Factors Contributing to Marriage in the 2021 US GSS"
+subtitle: "Possible response effect in children data"
+author: 
+  - Oluwabusayomi Adekuajo 
+thanks: "Code and data are available at: https://github.com/RohanAlexander/gss_analysis."
+date: "`r format(Sys.time(), '%d %B %Y')`"
+abstract: "The benefits from social support can be achieved through a multitude of relationships. Despite this, marriage is  most commonly sought after, and the reasons for such are not fully  understood. This paper looks at American indivdiduals in 2021 to compare the life styles of different marital groups to explore the potential advantages in marriage. Finidngs display that religion and children heavily impact the decision to marry and happiness due to such felt within. Our findings have implication for single indivduals searching for increase fufulilment."
+output:
+  bookdown::pdf_document2
+toc: FALSE
+bibliography: references.bib
+---
+
+```{r setup, include=FALSE}
+#knitr::opts_chunk$set(echo = TRUE)
+library(haven)
+library(knitr)
+library(tidyverse)
+library(tidyr)
+library(dplyr)
+#library(kableExtra)
+```
+
+```{r read, include=FALSE}
+data <-read.csv("prepared_gss.csv", header=T)
+```
+
+
+# Introduction
+
+Social support has been sought after through early history to the development of modern society. Throughout our own lives relationships have existed to provide socialization, the process of learning the norms and ideologies of society. Early in life, complete dependency is needed and so given in order to survive; familial relationships shape and guide the first system of values, norms, and beliefs. As we mature, and a sort of independency is established, relationships are still valued and help to navigate stressors, solve problems, and build resistance. When support no longer becomes guaranteed, stability in relationships with others are often earned for. Despite the multitude of relationships that existed to do so, marriage is quite commonly sought after. Why this is the case, has merited serious consideration since ancient times.
+
+Many factors must go into the decision to get married, and each couple may have a personal and unique reason. This paper explores the factors that possibly contribute to the commonness of marriage. Marital status was explored in participants in order to determine marriage frequency. The life satisfaction of participants was compared by examining excitement in life, overall happiness, happiness in marriage, and happiness for those who were not currently married but had a partner. Previous research on the association between parenthood and life satisfaction has shown that parents of minor children are not more satisfied with their lives than childless people (@parent). Number of children was thus chosen as a variable of interest. By depicting the complementarity of marriage, @econ explained how a single person shifts from being single to being married based on the division of labor. It was also mentioned that reduced learning costs would make an individual more willing to abandon the single status, and the number of families in the marriage market will increase (@econ). Due to this, degree, along with income was explored with expectation that higher income and education will be concentrated married couples.
+
+We find generally that, in discord to @parent, having children was associated with rating life as happier, but only if you were currently married. Divorced and never married individuals that had children tended to view live as less satisfying compared to those without children. Effect of income was not understood in completion as majority of the participants had incomes past the range provided in questionnaire, regardless of marital status. Summary of findings imply that the increased feeling of happiness and stability found through marriage are reasons why it is so heavily sought after. It may not be ideal though to wait until one is older to feel truly happy in life, understanding factors that contribute to this happiness could be invested in future years to sustain overall life satisfaction in population. 
+
+
+The remainder of this paper is structured as follows: Section  \@ref(data) explains the data, survey methodology, potential bias and ethical issues, along with how our data was selected. Section \@ref(results) discusses the techniques used to deliver the needed outcomes to investigate that factors that contribute to the commonness of marriage and presents the results. These findings are then discuss with their meaning revealed in
+Section \@ref(discussion).  In Section \@ref(appendix) there is an optional survey used to provided additional information that could improve contents of this report. 
+
+
+# Data
+
+Analysis and preperation of data was done using the statistical programming language R @citeR along with packages ggplot2 @citegg, knitr @citeknit, kableExtra @citeextra,tidyr @citetid, tidyverse @citetidyverse, dplyr @citedplyr, and haven @citehaven. Data was obtained from NORC. This report uses 4032 observations from the GSS Individual Year Data Sets of 2021 @citegss.
+
+## GSS 
+
+The General Social Survey or Social Surveys is a series of nationally representative cross- sectional interviews in the United States that have occurred since 1972. The GSS collects data on contemporary American society to monitor and explain trends in opinions, attitudes, and behaviors (@citegss). The 2021 GSS Cross-section includes the following topical modules, ISSP Social Inequality, ISSP Environment, Healthy people, Religion, Social Inequality, NSF Science Knowledge and Attitudes, High-risk Behaviors, GSS Scientific Advisory Board items from which the data used was derived from. 
+
+## Survey’s Methodology
+
+The survey collects data from adults, age 18 or older, from residents in the United States. People under this category were invited via mailed web link to participant on an online survey, with an incentive that was both non-contingent pre-paid and a contingent post- paid on. A phone option to participate in survey was also provided. The sampling frame was the individuals that lived noninstitutional housing during the time of questioning that had access to internet, a landline or cell phone. Data collection took place between December 1, 2020, to May 3, 2021. With stratified sampling, an adult from each household was randomly chosen to answer the survey. The target sample was 27,591 in which 4,032 was the final size. 
+
+Since tracking the trend of public opinion since 1972, the GSS has done a remarkable job in keeping the survey methodology as comparable as possible over time. In 2021, however, the global COVID-19 pandemic caused massive changes that worried the safety of the respondents and interviewers. The 2021 GSS responded to implement significant methodological adaptations from the traditional used in-person data collection to be primarily an address-based sampling push-to-web methodology. 
+
+
+## Strength 
+
+Though some changes were necessary due to the Covid-19 Pandemic, the GSS staff tried their best to accommodate online participation in order to minimize potential changes due to methodology. This includes changing how items were presented visually to respondents including buttons and colors for navigation, revising the sequence of certain items, and adjusting the response options for others(@citegg). The questionnaire was optimized to use the most common online browsers such as Chrome, Safari etc., along with the most common device types, desktop, laptop, tablet, and smartphone. Without affecting how participant answer question, these adjustments also help minimize “Don’t Know” and “No Answer” responses. 
+
+Telephone surveying did not need to change, keeping the same wording as the face-to-face original wording. The web survey, however, included many changes that were intended to remove conversational language in wording where it was no longer appropriate. These changes included standardizing terminology where interviewers had chosen options as they saw fit, rewording questions for items in which interviewers could select appropriate language according to information that they could observe but that was not yet recorded in the interview, rewording questions for items in which interviewers asked respondents open-ended questions but entered the responses in a combination of open-ended and closed-ended items. These changes were mostly confined to questions on Religion and Occupation/Industry, in which the data collected is concerned with. 
+
+## Weakness, Ethics and Bias Issues 
+
+While the data will contribute to our understanding of society, any changes in public opinion seen in the 2021 GSS data could be attributed to either changes in actual opinion or changes the GSS made in the methodology to adapt to COVID-19. Measure error is possible as answers given may differ from pre Covid settings due to how the survey questions were administered. One example is the Don’t Know” response categories were only included for factual questions, and not opinion-based question. This resulted in no response or skipping questions that participants did not know how to answer. Much data is lost once no response is recorded when data is cleaned in later steps. It is important to recognize using primary online administration have impacted the composition of those willing to respond leading to a highly possible response error. In 2021 there was response rate in 2021 of 17.4% severely less that the 50% of the past years. To counter act this concern the GSS implemented adjustments to known population. This however serves to bias the data as weighted totals are not the same as the usual control total. This called into question the ethics of manipulating data and calling it public opinion. Respondent selection may have happened when collecting the sample as in person interviews were not the ones collected household enumerations. This would bias the participants and effect validity of results if random sampling within the stratum household was not truly upheld.
+
+
+
+## Questionnaire Details
+
+The 2021 GSS cross-section primarily composed of a self-administered web questionnaire, with an option of a telephone survey. Typical items from the questionnaire displayed the typical layout of a self-administered web questionnaire along with the change to remove Don’t Know options from opinionated questions. A single survey is given though it is composed of three separate ballots with repeated questions that have been rearranged. The questionaries are also available in English and Spanish. With this there are 12 different questionaries, comprised of the three ballots across languages, and modes of administration, either online or over telephone. This variation aids to eliminate concentration of response errors on select variables. 
+
+Out of the question there were a few that could be subject to interpretation. Questions like how happy you are had only three options, Very Happy, Pretty Happy, Not too Happy. It is possible that participants that both answered the same option did not have the same interpretation for it. It is also possible that participants felt the fit into neither category, nor that their understanding of the adjective was different in encoding. Therefore, bias is likely due to an individual’s abstract comprehension of the choices.
+
+## Variable Selcetion 
+
+We were interested in understanding what factors contribute to the commonness of marriage, if it is so that marriage is common. Variables selected contributed to this understanding as they are known to affect marriage and confirm the commonality of marriage. To aid in investigation, marital, divorce, widowed, age when child was born, happy, happy marriage, happy cohabitation, age, degree, income, religion, and life were the selected as seen in Table \@ref(tab:dataset). 
+
+
+```{r dataset, echo = FALSE, fig.width=.2, fig.height=4}
+data |> 
+  select(marital, happy, age, degree, income, relgion, life) |> 
+  slice(1:10) |> 
+  kable(
+    caption = "First ten rows of a dataset of factors that contribute to commonality of marriage",
+    col.names = c("Martial Satus", "Happy", 
+                   "Age", "Degree", "Income", "Regligion", "Life"),
+    digits = 1,
+    booktabs = TRUE, 
+    linesep = "")
+```
+
+Marital status included categories married, widowed, divorced, separated or never married. It is indeed the case that marriage is the most common relationship as seen in Figure \@ref(fig:marry). Currently married individuals take up the majority of the participants, with the next most common category being never married individuals; they were half in size compared to those married. It should be noted that all other categories consist of individuals that have previously been married, solidify the commonality of marriage. If they were currently married, the divorced and widowed variable referred to those that been divorced or widowed before. 
+
+
+```{r marry, fig.cap="Representation of the commonality of marriage", echo = FALSE}
+# Graph 1: How many people are married
+data |> 
+  ggplot(aes(x = (marital))) +
+  geom_bar(color = "steelblue", fill = "steelblue") +
+  labs(x = "Marital Status of Respondent", y = "Number of Respondents") +
+  theme_classic()
+```
+
+The age when child was born was used to access whether the participant had a child or not as they could only participate if they had. To manipulate variable N/A were changed into 0 to indicate no child had been had. There was a proportion of participants, .4 percent, that did not answer the question. This skews representation of data and must be kept in mind when interpreting results. Table \@ref(tab:dataset) visualizing data set status were created using knitr (@citeknit), graphs were made in ggplot (@citegg). 
+
+
+
+# Results
+
+When looking further into currently married individuals Figure \@ref(fig:div) and Figure \@ref(fig:wid) show the majority have neither been divorced or widowed previously, though more have been previously divorced. This established that most of the married participants were on their first marriage. Figure \@ref(fig:age) displays the distribution of ages amongst participants. Married individuals range largely between 30 - 80 years old with almost no individuals being younger the age of 30. This has implications that marriage is reached only later in life, possibly to finding ones partner in early years. A large portion of participants that were never married are between the ages 20 - 40, with smaller proportions in older years. These results support the notion that adolescence is used to find a partner that could develop into a marital relationship in further years. And that marriage is a primary goal for most individual that requires time in order to fulfill. Divorced individuals had their highest peak between the ages 60 - 69 suggesting a possible instability in marriage.
+
+```{r div, fig.cap = 'Previously divorced individuals from those currently married', echo = FALSE}
+#Graph 2: From ucrrently married how many have been divorced or leg sep
+divdata <- 
+  data %>% 
+  drop_na(divorce)
+
+divdata |> 
+  ggplot(aes(x = divorce, fill = marital)) +
+  geom_bar(alpha = 0.8) +
+  labs(x = "Have Been Divorced Before", y = "Number of Respondents" , fill = "Marital Satus ") +
+  theme_classic() +
+  scale_fill_brewer(palette = "Purples")
+```
+
+
+```{r wid, fig.cap = 'Previously widowed individuals from those currently married, seperated or divorced', echo = FALSE}
+# Graph 3: If currently married, separated, or divorced: have you ever been widowed? 
+widdata <- 
+  data %>% 
+  drop_na(widowed)
+
+widdata |> 
+  ggplot(aes(x = widowed, fill = marital)) +
+  geom_bar(alpha = 0.8) +
+  labs(x = "Widowed", y = "Number of Respondents" , fill = "Marital Satus ") +
+  theme_classic() +
+  scale_fill_brewer(palette = "Greens")
+```
+
+```{r age, fig.cap = 'Distribution of age in particpants', echo = FALSE}
+# Graph 8 age of peole 
+
+beps <- 
+  data |> 
+  mutate(age = 
+           case_when(age < 19 ~ "<20",
+                     age < 29 ~ "20-29",
+                     age < 39 ~ "30-39",
+                     age < 49 ~ "40-49",
+                     age < 59 ~ "50-59",
+                     age < 69 ~ "60-69",
+                     age < 79 ~ "70-79",
+                     age < 90 ~ "80>"
+           ),
+         age = factor(age,
+                            levels = c("<20",
+                                       "20-29",
+                                       "30-39",
+                                       "40-49",
+                                       "50-59",
+                                       "60-69",
+                                       "70-79",
+                                       "80>"
+                            )
+         )
+  )
+
+
+beps |> 
+  ggplot(aes(x = age, fill = marital)) +
+  geom_bar(position = "dodge") +
+  labs(x = "Age", y = "Number of Respondents" , fill = "Marital Satus ") +
+  theme_classic()
+
+```
+
+The impacts children have on marriage can be seen by first looking at Figure \@ref(fig:kid) that depicts participants with and without children. The majority of the participants have children, however this is concentrated in the married individuals. These results are consistent with social norms to start having children after marriage. In regards to those with kids, it should be noted that divorced people were the second highest ranked while being one of the lowest ranked among those that had no children. This further proves that children are often had in marriages. Many of the participants that have never been married did not have any kids, though some did, suggest that children is an important factor in marriage. Looking further into the role children play, happiness and having children were compared amongst marital groups in Figure \@ref(fig:hapkid). Comparing the ‘Very happy’ and ‘not too happy’ category, with the same scale, you can see that most of the participants that were very happy and married had children. Those, however, that were not very happy and divorced also had children. Having children to those that have never been married did not seem to increase or decrease the perception of happiness. These results imply that children are a source of happiness only when married. It is also possible that having children when divorce is a source of unhappiness, or stress. 
+
+```{r kid, fig.cap = 'Amount of participants who had and didnt have kids', echo = FALSE}
+# Graph 4 dealing with kids 
+
+kiddata <- 
+  data %>%
+  mutate(agekdbrn = replace_na(agekdbrn, 0))
+
+kidshave <- 
+  kiddata |> 
+  mutate(agekdbrn = 
+           case_when(agekdbrn < 1 ~ "No Children",
+                     agekdbrn < 58 ~ "Children"
+           ),
+         agekdbrn = factor(agekdbrn,
+                            levels = c("No Children",
+                                       "Children"
+
+                            )
+         )
+  )
+
+
+kidshave |> 
+  ggplot(aes(x = agekdbrn, fill = marital)) +
+  geom_bar(position = "dodge") +
+  #geom_bar(color = "steelblue", fill = "steelblue") +
+  labs(x = "Children Status", y = "Number of Respondents", fill = "Marital Satus ") +
+  theme_classic()
+
+```
+
+
+```{r hapkid, fig.cap = 'Children were a cause of happiness only to those who were married', echo = FALSE}
+#Graph 13 
+kidshave  %>%  group_by(agekdbrn) %>% 
+  ggplot(aes(x = agekdbrn, fill = marital)) + 
+  geom_bar() +
+  facet_wrap(~happy, scales = "free") +
+  theme_minimal() + 
+  labs(x = "Children Status", 
+       y = "Number of Respondents",
+       title = "Relationship of Children and Happiness") + 
+  theme()
+
+```
+
+
+Looking at the overall happiness of individuals in the study, you can see through Figure \@ref(fig:hap) that married individuals occupied most of the pretty happy and very happy category. Most of the never married individuals also occupy a lot of the pretty happy category, but many of them did not identify as very happy. Suggesting that, though contentment with life can be found without marriage, full satisfaction is not often reached. In order to compare how happy people were in their relationships, married and cohabiting individuals expression of happiness in relationship was explored. Figure \@ref(fig:hapmar) shows that most of the married individuals were very happy, and almost none responded with not too happy in their relationship. This pattern can also be observed in Figure \@ref(fig:hapcor) dealing with the non married people. Satisfaction in relationship is thus experienced through those in them. 
+
+```{r hap, fig.cap = 'Happiness rating amoungst participants', echo = FALSE}
+# Graph 5 how happy people were 
+
+data |> 
+  ggplot(aes(x = happy, fill = marital)) +
+  geom_bar(position = "dodge") +
+  #geom_bar(color = "steelblue", fill = "steelblue") +
+  labs(x = "Happiness Rating", y = "Number of Respondents", fill = "Marital Satus ") +
+  theme_classic()
+
+```
+
+
+```{r hapmar, fig.cap = 'How happy participants described their marriage', echo = FALSE}
+# Graph 6 If currently married  how would you describe your marriage
+
+hmardata <- 
+  data %>% 
+  drop_na(hapmar)
+
+hmardata |> 
+  ggplot(aes(x = hapmar, fill = marital)) +
+  geom_bar(alpha = 0.8) +
+  labs(x = "Happiness Scale of Marriage", y = "Number of Respondents" , fill = "Marital Satus ") +
+  theme_classic()
+```
+
+
+```{r hapcor, fig.cap = 'How happy participants described their cohabitation', echo = FALSE}
+#Graph 7 If currently unmarried  how would you describe your relationship 
+
+hcordata <- 
+  data %>% 
+  drop_na(hapcohab)
+
+ 
+hcordata |> 
+  ggplot(aes(x = hapcohab, fill = marital)) +
+  geom_bar(alpha = 0.8) +
+  labs(x = "Happiness Scale of Cohabitation", y = "Number of Respondents" , fill = "Marital Satus ") +
+  theme_classic()
+```
+
+
+It is depicted in Figure \@ref(fig:degree) that regardless of marital status, most participants were high school graduates. The same trend can seen in married, divorced and never married individuals as many of them have their bachelors and a little less, their graduate degree. The religious differences between marital categories can be seen in Figure \@ref(fig:religion). Majority of the currently married people are Protestants, while most of the unmarried individual were Native American. Income appears to have the same distribution amongst marital categories with the most participants, seen in Figure \@ref(fig:income), in each group earning $25,000 or more. Rating of life between dull routine and exciting also seem to have the same distribution in groups as seen in Figure \@ref(fig:life) with the majority having a routine life, and exciting being the second most populated. 
+
+```{r degree, fig.cap = 'Highest education of Particpants', echo = FALSE}
+# Graph 9 of people degree 
+
+
+data %>%
+  mutate(degree = fct_relevel(degree, 
+                            "<High School", "High School", "Associate", 
+                            "Bachelors", "Graduate")) %>%
+  ggplot(aes(x = degree, fill = marital)) +
+  geom_bar(position = "dodge") +
+  labs(x = "Degree", y = "Number of Respondents" , fill = "Marital Satus ") +
+  theme_classic()
+
+```
+
+
+```{r religion, fig.cap = 'Religious practicing of partipants', echo = FALSE}
+# Graph 10 religion of people 
+data  %>%  group_by(relgion) %>% 
+  ggplot(aes(x = marital, fill = relgion))+
+  geom_bar(alpha = 0.8)+
+  labs(x = "Marital Status", 
+       y = "Number of Respondents", fill = "Relgion") 
+
+```
+
+```{r life, fig.cap = 'How exciting participants described their life', echo = FALSE}
+# Graph 12 of In general, do you find life exciting, pretty routine, or dull? 
+
+data %>%
+  mutate(life = fct_relevel(life, 
+                              "Dull", "Routine", "Exciting")) %>%
+  ggplot(aes(x = life, fill = marital)) +
+  geom_bar(position = "dodge") +
+  labs(x = "Life Rating", y = "Number of Respondent" , fill = "Marital Satus ") +
+  theme_classic()
+```
+
+
+```{r income, fig.cap = 'Highest income of particpants exceeds displayed range', echo = FALSE}
+data %>%
+  mutate(income = fct_relevel(income, 
+                              "<$1,000", "$1,000 to $2,999",
+                              "$3,000 to $3,999", "$4,000 to $4,999", 
+                              "$5,000 to $5,999", "$6,000 to $6,999", 
+                              "$7,000 to $7,999","$8,000 to $9,999", 
+                              "$10,000 to $14,999", "$15,000 to $19,999", 
+                              "$20,000 to $24,999", "$25,000 or more",
+                              "Refused")) %>%
+  ggplot(aes(y = income, fill = marital)) +
+  geom_bar() +
+  labs(x = "Number of Respondents", y = "Income" , fill = "Marital Satus ") +
+  theme_classic()
+```
+
+
+
+# Discussion
+
+## Income & Marriage
+
+Through the results derived from selected data, benefits of income could not be explored. Regardless of marital status, many participants earned a salary more than $25,000, which was the maximum amount recorded on the survey. It is possible a clear distribution of income existed beyond presented limit, however resources restrict further exploration. Even if a further range was developed in survey, only participants income was asked of.  A marriage relationship will only be established when the total income of the parties to the marriage is greater than that of the individuals separately and individual income is maximized, (@econ). Joint income, or income of spouse was not record, alleviating the appearance of economic benefits in marital status. 
+
+Financial pressures get more obvious with age. The support once given by parents is no longer available, and personal labor is needed to provide for everyday necessities. Financial stability is often desperately sought after which is why the economies of scale associated with living as a couple rather than in two separate households provide an incentive to marry, (@econ). Though finding were not possible through this survey, two incomes going into one household would be potential benefit of marriage, and further exploration is encouraged.  
+
+Dependency on a partner is another aspect related to income earned in a marital setting. In marital relationships, the level of dependency had on the other person will be inversely proportional to an individual’s value in the relationship, (@econ). As someone’s value, or possible income goes down, their dependence on their partner would go up to counter act the loss. This act is possible in marriage and allows for an individual to continue to hold on to quality of life while in search for additional income. This may explain why quality of life for married individuals were higher and life was described as stable through a multitude of responses
+
+
+## Marriage & Children 
+Having children is an important factor in marriage. Previous research on the association between parenthood and life satisfaction has shown that parents of minor children are not more satisfied with their lives than childless people, (@parent). These results were slightly inconsistent with that of this report. The addition of children did not improve life stratification in individuals belonging to the category of never married or divorced. In the case of divorced individuals, parenthood was met with decreased feelings of happiness, a common indicator of life satisfaction. Married parents, however, were much happier, describing themselves as very happy. This level of fulfillment was reach almost exclusively by those married whereas never married people were often just pretty happy. Out of these never married people included individuals in cohabiting relationships, results suggesting that children only benefit in a marriage.
+
+There are many reasons why this may be the case. The cost of raising children may act as suppressors of life satisfaction, (@parent). The majority of individuals had an income of 25,000 or more, while the cost of raising a kid is about 10,000 – 15,000 annually. Raising a child while supporting oneself can therefore be seen as a detriment to healthy mental status, as economic struggle is introduced to a previously stable lifestyle. The joint income and shared expenses provided through marriage would work to alleviate such stress while providing support for a household. This support is more than financial it is emotional as well. With less money troubles, attention can be focused on developing alongside kids and significant others. This would aid in improving outlook on life. This idea is further demonstrated through the fact that divorced individuals with kids were not very happy. Both economic and emotional support provided from previously stable relationship is omitted from equation. Along with that, additional stress due co-parenting may contribute to feeling of un-satisfaction. 
+
+
+## Religion & Marriage 
+
+Based on results it was established that many of the participants were on their first marriage. Mainline Protestants were less likely to enter first marriage when compared with Evangelical Protestants at younger ages, but there were no significant religious affiliation differences between women at older ages, (@reli). The type of protestant practicing was not specified in questionnaire. It can be seen, though, that of the married individuals the majority were protestants and started getting married from 30 years of age. It is possible that religious practicing teaches patients and encourages waiting for the right one as marriage is taught to be ordained by God as a union between a man and woman. Waiting to marry later in life would the outcome of these preaching’s and explain the trend observed.  
+
+Pregnancy and having children were positively associated with marriage in the Protestant religion, (@reli). This is because protestants see the purpose of marriage to include rearing children and mutual support for both husband and wife. This ideology may help explain the patterns in data where having children were quite prevalent in married individuals. Since most married participants were practicing protestants having children was likely one of the purposes of their marriage. First, religious similarity between partners seems to matter more to Evangelical Protestants; they maintained relatively high levels of religious homogamy, (@reli). Based on these findings it is likely that both husband and wife were practicing protestants, though this information was not collected. Questions on spousal data is required in the future to confirm inference. With a direct goal in mind shared with partner, personal connections are strengthened, and stability is further established showing as another advantage of marriage. 
+
+
+## Weaknesses and next steps
+
+Whilst manipulating data, non-response input was included. This was through integrating then/Aa by those that could not answer how many children they had due to lack of having children, with those that did not response. Though the proportion of true N/A was minimal, bias was introduced through this method. Information on spousal information was not available throughout this report. As one major benefits of marriage is the joining aspects of one’s life, failing to include data inhibited the capture of the true benefits of marriage. 
+
+In response to these limitations, future steps can be taken to ensure data incorporates all necessary aspects. A new survey could ask questions pertaining to spouse and significant other information. Different types of relationship can be explored in more detailed in replacement to the never married category. Modern relationships, from single, dating, to common law relationship can be added as marital status options to see how they interact with variables explored. It is not reasonable to expect young individual to wait until they are married to experience stability and comfort. It would be useful to expand on result to study what factors relate to life satisfaction. Understanding commonalty and benefits of marriage even when not married can help guide what never married individuals seem to lack. As seen previously, not all variables that contribute to happiness in marriage can do them same out of it. Variable pertaining to happiness in single individuals therefore could also be explored and compared to fully understand phenomenon. 
+.
+
+
+\newpage
+
+\appendix
+
+# Appendix {-}
+
+
+# Supplementary survey
+
+Our supplementary survey is available here: https://forms.gle/XmxKs1VnhDntnVfJ7
+
+## Preamble
+
+Marriage is the most common relationship amongst adults, and is often dreamed of through adolescence. The purpose of this survey is to better understating what benefits, if any, marriage has over other relationships. We are interested in how factors like income influence whether a financially linked o relationship is pursued and thus have included an income range further than that of the 2021 GSS. 
+
+By filling in this survey you acknowledge and consent that we will use your responses to help further understand which factors differ between married and un married individuals that contribute to the commonest of marriage. This forum is voluntary, and questions can be skip at any time. Your data will not be shared for non-academic purposes by the original creators of this survey. 
+
+## Questions
+
+1. What is your age?
+    - 18-25
+    - 26-35
+    - 36-45
+    - 46-55
+    - 56-65
+    - 66-75
+    - 76-85
+    - 86+
+  
+2. What is your gender?
+    - Female
+    - Male
+    - Transgender
+    - Non-binary
+    - Genderqueer
+    - Two-spirit
+    - Other
+
+3. What is you current relationship status?
+    - Married
+    - Divorced
+    - Single 
+    - Common Law
+    - In a relationship 
+    - Widowed 
+    - Engaged 
+    - Separated
+    - Prefer not to say  
+    - Other 
+    
+4. Have you ever been married? 
+    - Yes
+    - No
+    
+5. How many kids do you have? 
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4 + 
+
+6. What is your income? 
+    - 0 - 14,999
+    - 15,000 - 24,999
+    - 25,000 - 44,999 
+    - 45,000 - 74,999
+    - 75,000 - 89,000
+    - 90,000 - 149,999 
+    - 150,000 - 199,999 
+    - $200,000+
+    - Prefer not to say  
+  
+7. If married what is your spouses income?   
+    - 0 - 14,999
+    - 15,000 - 24,999
+    - 25,000 - 44,999 
+    - 45,000 - 74,999
+    - 75,000 - 89,000
+    - 90,000 - 149,999 
+    - 150,000 - 199,999 
+    - $200,000+
+    - Prefer not to say 
+    - Not applicable
+    
+8. What is your highest degree   
+    - Less than a high school diploma
+    - High school diploma 
+    - Some college, no degree 
+    - Associate's degree 
+    - Bachelor's degree 
+    - Master's degree 
+    - Professional degree 
+    - Doctoral degree 
+    
+9. If married what is your spouses highest degree ?  
+    - Less than a high school diploma
+    - High school diploma 
+    - Some college, no degree 
+    - Associate's degree 
+    - Bachelor's degree 
+    - Master's degree 
+    - Professional degree 
+    - Doctoral degree 
+    - Not applicable
+    
+10. Are you currently employed?  
+    - Yes
+    - No
+    
+11. If married is your spouse currently employed?
+    - Yes
+    - No
+    - Not applicable
+  
+12. On a scale of 1-5, how happy do you feel daily?
+    Not very happy - Very Happy 
+    
+13. On a scale of 1-5, how stable do you consider your relationship with your family?  
+    Un-stable - Very Stable 
+    
+14. On a scale of 1-5, how stable do you consider your relationship with your friends?  
+    Un-stable - Very Stable  
+    
+15.On a scale of 1-5, how stable do you consider your relationship with your partner (if applicable)?  
+    Un-stable - Very Stable 
+    
+16. How would you describe your physical health?
+    - Poor
+    - Unsatisfactory 
+    - Satisfactory
+    - Very Satisfactory
+    - Excellent 
+    
+17. How would you describe your emotional health?
+    - Poor
+    - Unsatisfactory 
+    - Satisfactory
+    - Very Satisfactory
+    - Excellent 
+    
+    
+18. What is your religious preference?
+    - Mainline Protestant
+    - Evangelical Protestants
+    - Catholic
+    - Buddhism
+    - Hinduism 
+    - Muslim
+    - Orthodox-Christian
+    - Christian
+    - Native American
+    - Inter-nondenominational 
+    - None
+    - Other
+    
+19. What is the religious preference of your spouse?
+    - Mainline Protestant
+    - Evangelical Protestants
+    - Catholic
+    - Buddhism
+    - Hinduism 
+    - Muslim
+    - Orthodox-Christian
+    - Christian
+    - Native American
+    - Inter-nondenominational 
+    - None
+    - Not applicable 
+    - Other
+    
+## End page
+
+Thank you very much for participating in our survey.
+
+
+
+
+
+
+\newpage
+
+
+# References
+
+
