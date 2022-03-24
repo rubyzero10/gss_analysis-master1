@@ -3,7 +3,7 @@ title: "Factors Contributing to Marriage in the 2021 US GSS"
 subtitle: "Possible response effect in children data"
 author: 
   - Oluwabusayomi Adekuajo 
-thanks: "Code and data are available at: https://github.com/RohanAlexander/gss_analysis."
+thanks: "Code and data are available at: git@github.com:rubyzero10/gss_analysis-master1.git."
 date: "`r format(Sys.time(), '%d %B %Y')`"
 abstract: "The benefits from social support can be achieved through a multitude of relationships. Despite this, marriage is  most commonly sought after, and the reasons for such are not fully  understood. This paper looks at American indivdiduals in 2021 to compare the life styles of different marital groups to explore the potential advantages in marriage. Finidngs display that religion and children heavily impact the decision to marry and happiness due to such felt within. Our findings have implication for single indivduals searching for increase fufulilment."
 output:
